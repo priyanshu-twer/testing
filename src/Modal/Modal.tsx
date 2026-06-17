@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
+import React from 'react';
+import { KeyboardAvoidingView} from 'react-native';
 import RNModal from 'react-native-modal';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as S from './Modal.styles';
 
 export interface ModalProps {
@@ -19,24 +18,6 @@ export const Modal: React.FC<ModalProps> = ({
   children,
   avoidKeyboard = false,
 }) => {
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-  // useEffect(() => {
-  //   const showEvent = Platform.OS === 'android' ? 'keyboardDidShow' : 'keyboardWillShow';
-  //   const hideEvent = Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide';
-
-  //   const showSubscription = Keyboard.addListener(showEvent, () => {
-  //     setKeyboardVisible(true);
-  //   });
-  //   const hideSubscription = Keyboard.addListener(hideEvent, () => {
-  //     setKeyboardVisible(false);
-  //   });
-
-  //   return () => {
-  //     showSubscription.remove();
-  //     hideSubscription.remove();
-  //   };
-  // }, [avoidKeyboard]);
-
   const modalContent = (
     <S.ModalContainer>
       <S.ModalHandle />
@@ -55,18 +36,12 @@ export const Modal: React.FC<ModalProps> = ({
       style={{ margin: 0, justifyContent: 'flex-end' }}
       backdropTransitionOutTiming={0}
       useNativeDriverForBackdrop
-      avoidKeyboard ={false}
+      avoidKeyboard={false}
       statusBarTranslucent
     >
-  
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          // style={{ width: '100%', justifyContent: 'flex-end' }}
-          // enabled={isKeyboardVisible}
-        > 
-          {modalContent}
-        </KeyboardAvoidingView>
-     
+      <KeyboardAvoidingView behavior="padding">
+        {modalContent}
+      </KeyboardAvoidingView>
     </RNModal>
   );
 };
